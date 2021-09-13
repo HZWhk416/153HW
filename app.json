@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "HelloZhiwei",
+    "slug": "HelloZhiwei",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "HelloZhiwei"
+}
