@@ -1,11 +1,13 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { StyleSheet, Text, View, Button, ImageBackground, Image} from 'react-native';
 
 const SingleEvent = (props) => {
+    //const [event, setEvent] = useState('');
     return (
         <View style={styles.singleEvent}>
             <Text style={styles.textStyle}>
-               {props.event} 
+               Today's event: {props.event} 
             </Text>
         </View>
     )
@@ -13,9 +15,9 @@ const SingleEvent = (props) => {
 
 const styles = StyleSheet.create({
     singleEvent: {
-        width: '30%',
+        width: '40%',
         //height: '30px',
-        backgroundColor: 'yellow',
+        //backgroundColor: 'blue',
         alignItems: 'stretch',
         justifyContent: 'center',
     },

@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { StyleSheet, Text, View, Button, ImageBackground, Image} from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import SingleEvent from './SingleEvent';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,8 @@ const MyStack = () => {
 
 
 const Home = ({navigation}) => {
+    const [theInfo, setTheInfo] = useState({MonEvents: ',', TueEvents: ',', WedEvents: ',', ThuEvents: ',', FriEvents: ','}) 
+
     const [MonEvents, setMonEvents] = useState("");
     const [MonText, setMonText] = useState("");
 
@@ -45,11 +48,52 @@ const Home = ({navigation}) => {
     const [FriEvents, setFriEvents] = useState("");
     const [FriText, setFriText] = useState("");
 
-    const [SatEvents, setSatEvents] = useState("");
-    const [SatText, setSatText] = useState("");
+    const [inputText, setInputText] = useState('');
 
-    const [SunEvents, setSunEvents] = useState("");
-    const [SunText, setSunText] = useState("");
+    useEffect(() => {getData()},[])
+
+    const getData = async () => {
+        try {
+          const jsonValue = await AsyncStorage.getItem('@data_info')
+          let data = null
+          if (jsonValue!=null) {
+            data = JSON.parse(jsonValue)
+            setTheInfo(data)
+            setMonEvents(data.MonEvents)
+            setTueEvents(data.TueEvents)
+            setWedEvents(data.WedEvents)
+            setThuEvents(data.ThuEvents)
+            setFriEvents(data.FriEvents)
+            console.log('set Info, and events from Monday to Friday')
+          } else {
+            console.log('just read a null value from Storage')
+            setMonEvents(',')
+            setTueEvents(',')
+            setWedEvents(',')
+            setThuEvents(',')
+            setFriEvents(',')
+          }
+        } catch(e) {
+          console.log("error in getData ")
+          console.dir(e)
+          // error reading value
+        }
+    }
+
+    // storeData converts the value stored in the info variable to a string
+    // which is then writes into local storage using AsyncStorage.setItem.
+    const storeData = async (value) => {
+        try {
+            const jsonValue = JSON.stringify(value)
+            await AsyncStorage.setItem('@data_info', jsonValue)
+            console.log('just stored '+jsonValue)
+        } catch (e) {
+            console.log("error in storeData ")
+            console.dir(e)
+            // saving error
+        }
+    }
+
     return (
         // <View>   
         <ImageBackground
@@ -61,7 +105,6 @@ const Home = ({navigation}) => {
                 <Text style={{fontSize: 45}}>
                     Zhiwei's Calender
                 </Text> 
-
                 <View style = {styles.About}>
                     <Button
                         title="About"
@@ -70,7 +113,6 @@ const Home = ({navigation}) => {
                         }
                     />
                 </View>
-                
             </View>
 
             <View style = {styles.Calenders}>
@@ -82,14 +124,22 @@ const Home = ({navigation}) => {
                         placeholder="enter event here"
                         onChangeText={text => (setMonText(text))}
                         style={{marginRight: '10px', borderBottomWidth: 1.0}}
+                        value = {MonText}
                     />
                     <View style={{marginRight: '10px'}}>
                         <Button
                             title="update event of Monday"
-                            onPress = {() => setMonEvents(MonText)}
+                            onPress = {() => {
+                                if (MonText != '') {
+                                    setMonEvents(MonText); 
+                                    setMonText('');
+                                    const theInfo = {MonEvents: MonEvents, TueEvents: TueEvents, WedEvents: WedEvents, ThuEvents: ThuEvents, FriEvents: FriEvents}
+                                    setTheInfo(theInfo)
+                                    storeData(theInfo)
+                                }
+                            }}
                         />
-                    </View>
-                    
+                    </View> 
                     <Button
                         title = "check Monday Event"
                         onPress={() =>
@@ -108,14 +158,22 @@ const Home = ({navigation}) => {
                         placeholder="enter event here"
                         onChangeText={text => (setTueText(text))}
                         style={{marginRight: '10px', borderBottomWidth: 1.0}}
+                        value={TueText}
                     />
                     <View style={{marginRight: '10px'}}>
                         <Button
                             title="update event of Tuesday"
-                            onPress = {() => setTueEvents(TueText)}
+                            onPress = {() => {
+                                if (TueText != '') {
+                                    setTueEvents(TueText); 
+                                    setTueText('');
+                                    const theInfo = {MonEvents: MonEvents, TueEvents: TueEvents, WedEvents: WedEvents, ThuEvents: ThuEvents, FriEvents: FriEvents}
+                                    setTheInfo(theInfo)
+                                    storeData(theInfo)
+                                }
+                            }}
                         />
                     </View>
-                    
                     <Button
                         title = "check Tuesday Event"
                         onPress={() =>
@@ -134,14 +192,22 @@ const Home = ({navigation}) => {
                         placeholder="enter event here"
                         onChangeText={text => (setWedText(text))}
                         style={{marginRight: '10px', borderBottomWidth: 1.0}}
+                        value={WedText}
                     />
                     <View style={{marginRight: '10px'}}>
                         <Button
                             title="update event of Wednesday"
-                            onPress = {() => setWedEvents(WedText)}
+                            onPress = {() => {
+                                if (WedText != '') {
+                                    setWedEvents(WedText); 
+                                    setWedText('');
+                                    const theInfo = {MonEvents: MonEvents, TueEvents: TueEvents, WedEvents: WedEvents, ThuEvents: ThuEvents, FriEvents: FriEvents}
+                                    setTheInfo(theInfo)
+                                    storeData(theInfo)
+                                }
+                            }}
                         />
                     </View>
-                    
                     <Button
                         title = "check Wednesday Event"
                         onPress={() =>
@@ -157,17 +223,25 @@ const Home = ({navigation}) => {
                         Thursday
                     </Text>
                     <TextInput
+                        style={{marginRight: '10px', borderBottomWidth: 1.0}}
                         placeholder="enter event here"
                         onChangeText={text => (setThuText(text))}
-                        style={{marginRight: '10px', borderBottomWidth: 1.0}}
+                        value={ThuText}
                     />
                     <View style={{marginRight: '10px'}}>
                         <Button
                             title="update event of Thursday"
-                            onPress = {() => setThuEvents(ThuText)}
+                            onPress = {() => {
+                                if (ThuText != '') {
+                                    setThuEvents(ThuText); 
+                                    setThuText('');
+                                    const theInfo = {MonEvents: MonEvents, TueEvents: TueEvents, WedEvents: WedEvents, ThuEvents: ThuEvents, FriEvents: FriEvents}
+                                    setTheInfo(theInfo)
+                                    storeData(theInfo)
+                                }
+                            }}
                         />
                     </View>
-                    
                     <Button
                         title = "check Thursday Event"
                         onPress={() =>
@@ -186,14 +260,22 @@ const Home = ({navigation}) => {
                         placeholder="enter event here"
                         onChangeText={text => (setFriText(text))}
                         style={{marginRight: '10px', borderBottomWidth: 1.0}}
+                        value={FriText}
                     />
                     <View style={{marginRight: '10px'}}>
                         <Button
                             title="update event of Friday"
-                            onPress = {() => setFriEvents(FriText)}
+                            onPress = {() => {
+                                if (FriText != '') {
+                                    setFriEvents(FriText); 
+                                    setFriText('');
+                                    const theInfo = {MonEvents: MonEvents, TueEvents: TueEvents, WedEvents: WedEvents, ThuEvents: ThuEvents, FriEvents: FriEvents}
+                                    setTheInfo(theInfo)
+                                    storeData(theInfo)
+                                }
+                            }}
                         />
-                    </View>
-                    
+                    </View> 
                     <Button
                         title = "check Friday Event"
                         onPress={() =>
