@@ -31,7 +31,7 @@ const MyStack = () => {
 
 
 const Home = ({navigation}) => {
-    const [theInfo, setTheInfo] = useState({MonEvents: ',', TueEvents: ',', WedEvents: ',', ThuEvents: ',', FriEvents: ','}) 
+    const [theInfo, setTheInfo] = useState({MonEvents: '', TueEvents: '', WedEvents: '', ThuEvents: '', FriEvents: ''}) 
 
     const [MonEvents, setMonEvents] = useState("");
     const [MonText, setMonText] = useState("");
@@ -67,11 +67,11 @@ const Home = ({navigation}) => {
             console.log('set Info, and events from Monday to Friday')
           } else {
             console.log('just read a null value from Storage')
-            setMonEvents(',')
-            setTueEvents(',')
-            setWedEvents(',')
-            setThuEvents(',')
-            setFriEvents(',')
+            setMonEvents('')
+            setTueEvents('')
+            setWedEvents('')
+            setThuEvents('')
+            setFriEvents('')
           }
         } catch(e) {
           console.log("error in getData ")
@@ -251,15 +251,14 @@ const Home = ({navigation}) => {
                     />
                 </View>
 
-
                 <View style={{flexDirection: 'row', marginBottom: '10px'}}>
                     <Text style={styles.DayText}>
                         Friday
                     </Text>
                     <TextInput
+                        style={{marginRight: '10px', borderBottomWidth: 1.0}}
                         placeholder="enter event here"
                         onChangeText={text => (setFriText(text))}
-                        style={{marginRight: '10px', borderBottomWidth: 1.0}}
                         value={FriText}
                     />
                     <View style={{marginRight: '10px'}}>
@@ -275,7 +274,7 @@ const Home = ({navigation}) => {
                                 }
                             }}
                         />
-                    </View> 
+                    </View>
                     <Button
                         title = "check Friday Event"
                         onPress={() =>
