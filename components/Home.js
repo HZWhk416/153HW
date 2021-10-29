@@ -3,7 +3,7 @@ import { useState, useEffect} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { StyleSheet, Text, View, Button, ImageBackground, Image} from 'react-native';
+import { StyleSheet, Text, View, Button, ImageBackground, Image, UselessTextInput, KeyboardAvoidingView} from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import SingleEvent from './SingleEvent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -31,21 +31,21 @@ const MyStack = () => {
 
 
 const Home = ({navigation}) => {
-    const [theInfo, setTheInfo] = useState({MonEvents: '', TueEvents: '', WedEvents: '', ThuEvents: '', FriEvents: ''}) 
+    const [theInfo, setTheInfo] = useState({MonEvents: [], TueEvents: [], WedEvents: [], ThuEvents: [], FriEvents: []}) 
 
-    const [MonEvents, setMonEvents] = useState("");
+    const [MonEvents, setMonEvents] = useState([]);
     const [MonText, setMonText] = useState("");
 
-    const [TueEvents, setTueEvents] = useState("");
+    const [TueEvents, setTueEvents] = useState([]);
     const [TueText, setTueText] = useState("");
 
-    const [WedEvents, setWedEvents] = useState("");
+    const [WedEvents, setWedEvents] = useState([]);
     const [WedText, setWedText] = useState("");
 
-    const [ThuEvents, setThuEvents] = useState("");
+    const [ThuEvents, setThuEvents] = useState([]);
     const [ThuText, setThuText] = useState("");
 
-    const [FriEvents, setFriEvents] = useState("");
+    const [FriEvents, setFriEvents] = useState([]);
     const [FriText, setFriText] = useState("");
 
     const [inputText, setInputText] = useState('');
@@ -67,16 +67,32 @@ const Home = ({navigation}) => {
             console.log('set Info, and events from Monday to Friday')
           } else {
             console.log('just read a null value from Storage')
-            setMonEvents('')
-            setTueEvents('')
-            setWedEvents('')
-            setThuEvents('')
-            setFriEvents('')
+            setMonEvents([])
+            setTueEvents([])
+            setWedEvents([])
+            setThuEvents([])
+            setFriEvents([])
           }
         } catch(e) {
           console.log("error in getData ")
           console.dir(e)
           // error reading value
+        }
+    }
+
+    const clearAll = async () => {
+        try {
+            setFriEvents([])
+            setMonEvents([])
+            setThuEvents([])
+            setTueEvents([])
+            setWedEvents([])
+            console.log('in clearData')
+            await AsyncStorage.clear()
+        } catch(e) {
+            console.log("error in clearData ")
+            console.dir(e)
+            // clear error
         }
     }
 
@@ -95,16 +111,23 @@ const Home = ({navigation}) => {
     }
 
     return (
-        // <View>   
+        // <View>  
+        
         <ImageBackground
             blurRadius={7}
             style={{flex:1}} 
             source={{uri:'https://cdn.wallpapersafari.com/98/93/GefbNz.jpg'}} 
         >
             <View style = {styles.Title}>
-                <Text style={{fontSize: 45}}>
-                    Zhiwei's Calender
+                <Text style={{fontSize: 20}}>
+                    Your weekly events list
                 </Text> 
+                <View>
+                    <Button 
+                        title="clear"
+                        onPress={() => clearAll()}
+                    />
+                </View>
                 <View style = {styles.About}>
                     <Button
                         title="About"
@@ -116,22 +139,29 @@ const Home = ({navigation}) => {
             </View>
 
             <View style = {styles.Calenders}>
-                <View style={{flexDirection: 'row', marginBottom: '10px'}}>
+                <View style={styles.OneLine}>
                     <Text style={styles.DayText}>
                         Monday
                     </Text>
+                    <View style={{flexDirection: 'row', marginLeft: 10}}>
+                    {/* <View style={{maxWidth: '50%'}}> */}
                     <TextInput
+                        style={styles.Input}
                         placeholder="enter event here"
                         onChangeText={text => (setMonText(text))}
-                        style={{marginRight: '10px', borderBottomWidth: 1.0}}
+                        style={{marginRight: 10, borderBottomWidth: 1.0}}
                         value = {MonText}
+                        numberOfLines={5}
                     />
-                    <View style={{marginRight: '10px'}}>
+                    {/* </View> */}
+                    <View style={{marginRight: 10}}>
                         <Button
-                            title="update event of Monday"
+                            title="update"
                             onPress = {() => {
                                 if (MonText != '') {
-                                    setMonEvents(MonText); 
+                                    //var curMonEvents = this.state.MonEvents
+                                    setMonEvents(MonEvents.concat(MonText, '')); 
+                                    //console.log(MonEvents)
                                     setMonText('');
                                     const theInfo = {MonEvents: MonEvents, TueEvents: TueEvents, WedEvents: WedEvents, ThuEvents: ThuEvents, FriEvents: FriEvents}
                                     setTheInfo(theInfo)
@@ -141,31 +171,33 @@ const Home = ({navigation}) => {
                         />
                     </View> 
                     <Button
-                        title = "check Monday Event"
+                        title = "check"
                         onPress={() =>
                             // navigation.navigate('MondayEvents', {eventList: ["monday event1", "monday event2", "monday event3"]})
                             navigation.navigate('MondayEvents', {event: MonEvents})
                         }
                     />
+                    </View>
                 </View>
 
 
-                <View style={{flexDirection: 'row', marginBottom: '10px'}}>
+                <View style={styles.OneLine}>
                     <Text style={styles.DayText}>
                         Tuesday
                     </Text>
+                    <View style={{flexDirection: 'row', marginLeft: 10}}>
                     <TextInput
                         placeholder="enter event here"
                         onChangeText={text => (setTueText(text))}
-                        style={{marginRight: '10px', borderBottomWidth: 1.0}}
+                        style={{marginRight: 10, borderBottomWidth: 1.0}}
                         value={TueText}
                     />
-                    <View style={{marginRight: '10px'}}>
+                    <View style={{marginRight: 10}}>
                         <Button
-                            title="update event of Tuesday"
+                            title="update"
                             onPress = {() => {
                                 if (TueText != '') {
-                                    setTueEvents(TueText); 
+                                    setTueEvents(TueEvents.concat(TueText, '')); 
                                     setTueText('');
                                     const theInfo = {MonEvents: MonEvents, TueEvents: TueEvents, WedEvents: WedEvents, ThuEvents: ThuEvents, FriEvents: FriEvents}
                                     setTheInfo(theInfo)
@@ -175,31 +207,33 @@ const Home = ({navigation}) => {
                         />
                     </View>
                     <Button
-                        title = "check Tuesday Event"
+                        title = "check"
                         onPress={() =>
                             // navigation.navigate('MondayEvents', {eventList: ["monday event1", "monday event2", "monday event3"]})
                             navigation.navigate('TuesdayEvents', {event: TueEvents})
                         }
                     />
+                    </View>
                 </View>
 
 
-                <View style={{flexDirection: 'row', marginBottom: '10px'}}>
+                <View style={styles.OneLine}>
                     <Text style={styles.DayText}>
                         Wednesday
                     </Text>
+                    <View style={{flexDirection: 'row', marginLeft: 10}}>
                     <TextInput
                         placeholder="enter event here"
                         onChangeText={text => (setWedText(text))}
-                        style={{marginRight: '10px', borderBottomWidth: 1.0}}
+                        style={{marginRight: 10, borderBottomWidth: 1.0}}
                         value={WedText}
                     />
-                    <View style={{marginRight: '10px'}}>
+                    <View style={{marginRight: 10}}>
                         <Button
-                            title="update event of Wednesday"
+                            title="update"
                             onPress = {() => {
                                 if (WedText != '') {
-                                    setWedEvents(WedText); 
+                                    setWedEvents(WedEvents.concat(WedText, '')); 
                                     setWedText('');
                                     const theInfo = {MonEvents: MonEvents, TueEvents: TueEvents, WedEvents: WedEvents, ThuEvents: ThuEvents, FriEvents: FriEvents}
                                     setTheInfo(theInfo)
@@ -209,31 +243,33 @@ const Home = ({navigation}) => {
                         />
                     </View>
                     <Button
-                        title = "check Wednesday Event"
+                        title = "check"
                         onPress={() =>
                             // navigation.navigate('MondayEvents', {eventList: ["monday event1", "monday event2", "monday event3"]})
                             navigation.navigate('WednesdayEvents', {event: WedEvents})
                         }
                     />
+                    </View>
                 </View>
 
 
-                <View style={{flexDirection: 'row', marginBottom: '10px'}}>
+                <View style={styles.OneLine}>
                     <Text style={styles.DayText}>
                         Thursday
                     </Text>
+                    <View style={{flexDirection: 'row', marginLeft: 10}}>
                     <TextInput
-                        style={{marginRight: '10px', borderBottomWidth: 1.0}}
+                        style={{marginRight: 10, borderBottomWidth: 1.0}}
                         placeholder="enter event here"
                         onChangeText={text => (setThuText(text))}
                         value={ThuText}
                     />
-                    <View style={{marginRight: '10px'}}>
+                    <View style={{marginRight: 10}}>
                         <Button
-                            title="update event of Thursday"
+                            title="update"
                             onPress = {() => {
                                 if (ThuText != '') {
-                                    setThuEvents(ThuText); 
+                                    setThuEvents(ThuEvents.concat(ThuText, '')); 
                                     setThuText('');
                                     const theInfo = {MonEvents: MonEvents, TueEvents: TueEvents, WedEvents: WedEvents, ThuEvents: ThuEvents, FriEvents: FriEvents}
                                     setTheInfo(theInfo)
@@ -243,30 +279,32 @@ const Home = ({navigation}) => {
                         />
                     </View>
                     <Button
-                        title = "check Thursday Event"
+                        title = "check"
                         onPress={() =>
                             // navigation.navigate('MondayEvents', {eventList: ["monday event1", "monday event2", "monday event3"]})
                             navigation.navigate('ThursdayEvents', {event: ThuEvents})
                         }
                     />
+                    </View>
                 </View>
 
-                <View style={{flexDirection: 'row', marginBottom: '10px'}}>
+                <View style={styles.OneLine}>
                     <Text style={styles.DayText}>
                         Friday
                     </Text>
+                    <View style={{flexDirection: 'row', marginLeft: 10}}>
                     <TextInput
-                        style={{marginRight: '10px', borderBottomWidth: 1.0}}
+                        style={{marginRight: 10, borderBottomWidth: 1.0}}
                         placeholder="enter event here"
                         onChangeText={text => (setFriText(text))}
                         value={FriText}
                     />
-                    <View style={{marginRight: '10px'}}>
+                    <View style={{marginRight: 10}}>
                         <Button
-                            title="update event of Friday"
+                            title="update"
                             onPress = {() => {
                                 if (FriText != '') {
-                                    setFriEvents(FriText); 
+                                    setFriEvents(FriEvents.concat(FriText, '')); 
                                     setFriText('');
                                     const theInfo = {MonEvents: MonEvents, TueEvents: TueEvents, WedEvents: WedEvents, ThuEvents: ThuEvents, FriEvents: FriEvents}
                                     setTheInfo(theInfo)
@@ -276,16 +314,17 @@ const Home = ({navigation}) => {
                         />
                     </View>
                     <Button
-                        title = "check Friday Event"
+                        title = "check"
                         onPress={() =>
                             // navigation.navigate('MondayEvents', {eventList: ["monday event1", "monday event2", "monday event3"]})
                             navigation.navigate('FridayEvents', {event: FriEvents})
                         }
                     />
+                    </View>
                 </View>
             </View>
         </ImageBackground>
-        
+         
     );
 }
 
@@ -304,6 +343,9 @@ const About = ({navigation, route}) => {
 };
 
 const MondayEvents = ({navigation, route}) => {
+    const events = route.params.event
+    console.log(events)
+    console.log(typeof events)
     return (
         <ImageBackground
             blurRadius={7}
@@ -311,13 +353,14 @@ const MondayEvents = ({navigation, route}) => {
             source={{uri:'https://cdn.wallpapersafari.com/98/93/GefbNz.jpg'}} 
         >
             <View style = {{flexDirection: 'column'}}>
-                {<SingleEvent event={route.params.event}/>}
+                {<SingleEvent event={events}/>}
             </View> 
         </ImageBackground>
     )
 };
 
 const TuesdayEvents = ({navigation, route}) => {
+    const events = route.params.event
     return (
         <ImageBackground
             blurRadius={7}
@@ -325,13 +368,14 @@ const TuesdayEvents = ({navigation, route}) => {
             source={{uri:'https://cdn.wallpapersafari.com/98/93/GefbNz.jpg'}} 
         >
             <View style = {{flexDirection: 'column'}}>
-                {<SingleEvent event={route.params.event}/>}
+                {<SingleEvent event={events}/>}
             </View> 
         </ImageBackground>
     )
 };
 
 const WednesdayEvents = ({navigation, route}) => {
+    const events = route.params.event
     return (
         <ImageBackground
             blurRadius={7}
@@ -339,13 +383,14 @@ const WednesdayEvents = ({navigation, route}) => {
             source={{uri:'https://cdn.wallpapersafari.com/98/93/GefbNz.jpg'}} 
         >
             <View style = {{flexDirection: 'column'}}>
-                {<SingleEvent event={route.params.event}/>}
+                {<SingleEvent event={events}/>}
             </View> 
         </ImageBackground>
     )
 };
 
 const ThursdayEvents = ({navigation, route}) => {
+    const events = route.params.event
     return (
         <ImageBackground
             blurRadius={7}
@@ -353,13 +398,14 @@ const ThursdayEvents = ({navigation, route}) => {
             source={{uri:'https://cdn.wallpapersafari.com/98/93/GefbNz.jpg'}} 
         >
             <View style = {{flexDirection: 'column'}}>
-                {<SingleEvent event={route.params.event}/>}
+                {<SingleEvent event={events}/>}
             </View> 
         </ImageBackground>
     )
 };
 
 const FridayEvents = ({navigation, route}) => {
+    const events = route.params.event
     return (
         <ImageBackground
             blurRadius={7}
@@ -367,7 +413,7 @@ const FridayEvents = ({navigation, route}) => {
             source={{uri:'https://cdn.wallpapersafari.com/98/93/GefbNz.jpg'}} 
         >
             <View style = {{flexDirection: 'column'}}>
-                {<SingleEvent event={route.params.event}/>}
+                {<SingleEvent event={events}/>}
             </View> 
         </ImageBackground>
     )
@@ -380,14 +426,14 @@ const FridayEvents = ({navigation, route}) => {
 const styles = StyleSheet.create({
     Title: {
         marginBottom: '10px',
-        width: '40%',
+        //width: '40%',
         alignItems: 'center',
         justifyContent: 'space-between',
         //backgroundColor: '#53e0ce',
         flexDirection: 'row',
     },
     Calenders: {
-        width: '20%',
+        //width: '20%',
         flexDirection: 'column',
     },
     About: {
@@ -398,7 +444,22 @@ const styles = StyleSheet.create({
         color: 'blue',
         marginLeft: '10px', 
         marginRight: '10px', 
-        fontSize: 20,
+        fontSize: 15,
+    },
+    OneLine: {
+        flexDirection: 'column',
+        //marginBottom: 20
+        maxWidth: '50%'
+    },
+    Input: {
+        //maxWidth: WIDTH - 40,
+        maxWidth: '50%',
+        //height: '100%',
+        marginRight: 10, 
+        borderBottomWidth: 1.0,
+        marginTop: 100,
+        fontSize: 100,
+        
     }
 })
 
