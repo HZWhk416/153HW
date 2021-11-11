@@ -7,6 +7,7 @@ import { StyleSheet, Text, View, Button, ImageBackground, Image, UselessTextInpu
 import { TextInput } from 'react-native-gesture-handler';
 import SingleEvent from './SingleEvent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useValue } from './ValueContext';
 
 const Stack = createNativeStackNavigator();
 
@@ -49,6 +50,9 @@ const Home = ({navigation}) => {
     const [FriText, setFriText] = useState("");
 
     const [inputText, setInputText] = useState('');
+
+    const {currentValue} = useValue()
+    const BackgroundUrl = currentValue.bgurl
 
     useEffect(() => {getData()},[])
 
@@ -116,7 +120,7 @@ const Home = ({navigation}) => {
         <ImageBackground
             blurRadius={7}
             style={{flex:1}} 
-            source={{uri:'https://cdn.wallpapersafari.com/98/93/GefbNz.jpg'}} 
+            source={{uri: BackgroundUrl}} 
         >
             <View style = {styles.Title}>
                 <Text style={{fontSize: 20}}>
@@ -329,11 +333,13 @@ const Home = ({navigation}) => {
 }
 
 const About = ({navigation, route}) => {
+    const {currentValue} = useValue()
+    const BackgroundUrl = currentValue.bgurl
     return (
         <ImageBackground
             blurRadius={7}
             style={{flex:1}} 
-            source={{uri:'https://cdn.wallpapersafari.com/98/93/GefbNz.jpg'}} 
+            source={{uri: BackgroundUrl}} 
         >
             <Text style={{fontSize: 45}}>
                 {route.params.content}
@@ -344,13 +350,15 @@ const About = ({navigation, route}) => {
 
 const MondayEvents = ({navigation, route}) => {
     const events = route.params.event
-    console.log(events)
-    console.log(typeof events)
+    //console.log(events)
+    //console.log(typeof events)
+    const {currentValue} = useValue()
+    const BackgroundUrl = currentValue.bgurl
     return (
         <ImageBackground
             blurRadius={7}
             style={{flex:1}} 
-            source={{uri:'https://cdn.wallpapersafari.com/98/93/GefbNz.jpg'}} 
+            source={{uri: BackgroundUrl}} 
         >
             <View style = {{flexDirection: 'column'}}>
                 {<SingleEvent event={events}/>}
@@ -361,11 +369,13 @@ const MondayEvents = ({navigation, route}) => {
 
 const TuesdayEvents = ({navigation, route}) => {
     const events = route.params.event
+    const {currentValue} = useValue()
+    const BackgroundUrl = currentValue.bgurl
     return (
         <ImageBackground
             blurRadius={7}
             style={{flex:1}} 
-            source={{uri:'https://cdn.wallpapersafari.com/98/93/GefbNz.jpg'}} 
+            source={{uri: BackgroundUrl}} 
         >
             <View style = {{flexDirection: 'column'}}>
                 {<SingleEvent event={events}/>}
@@ -376,11 +386,13 @@ const TuesdayEvents = ({navigation, route}) => {
 
 const WednesdayEvents = ({navigation, route}) => {
     const events = route.params.event
+    const {currentValue} = useValue()
+    const BackgroundUrl = currentValue.bgurl
     return (
         <ImageBackground
             blurRadius={7}
             style={{flex:1}} 
-            source={{uri:'https://cdn.wallpapersafari.com/98/93/GefbNz.jpg'}} 
+            source={{uri: BackgroundUrl}} 
         >
             <View style = {{flexDirection: 'column'}}>
                 {<SingleEvent event={events}/>}
@@ -391,11 +403,13 @@ const WednesdayEvents = ({navigation, route}) => {
 
 const ThursdayEvents = ({navigation, route}) => {
     const events = route.params.event
+    const {currentValue} = useValue()
+    const BackgroundUrl = currentValue.bgurl
     return (
         <ImageBackground
             blurRadius={7}
             style={{flex:1}} 
-            source={{uri:'https://cdn.wallpapersafari.com/98/93/GefbNz.jpg'}} 
+            source={{uri: BackgroundUrl}} 
         >
             <View style = {{flexDirection: 'column'}}>
                 {<SingleEvent event={events}/>}
@@ -406,11 +420,13 @@ const ThursdayEvents = ({navigation, route}) => {
 
 const FridayEvents = ({navigation, route}) => {
     const events = route.params.event
+    const {currentValue} = useValue()
+    const BackgroundUrl = currentValue.bgurl
     return (
         <ImageBackground
             blurRadius={7}
             style={{flex:1}} 
-            source={{uri:'https://cdn.wallpapersafari.com/98/93/GefbNz.jpg'}} 
+            source={{uri: BackgroundUrl}} 
         >
             <View style = {{flexDirection: 'column'}}>
                 {<SingleEvent event={events}/>}

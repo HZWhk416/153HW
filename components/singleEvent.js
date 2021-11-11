@@ -1,25 +1,41 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { StyleSheet, Text, View, Button, ImageBackground, Image} from 'react-native';
+import { render } from 'react-dom';
+import { StyleSheet, Text, View, Button, ImageBackground, Image, FlatList} from 'react-native';
+import HowManyDaily from '../container/HowManyDaily';
 
 const SingleEvent = (props) => {
     //const [event, setEvent] = useState('');
     const events = props.event
     console.log(typeof events)
+
+    const renderItem = ({item}) => {
+        return (
+            <Text>{item}</Text>
+        )
+    }
     return (
         <View style={styles.singleEvent}>
             <Text style={styles.textStyle}>
                Today's event: 
             </Text>
-            <View style={{flexDirection: 'column'}}>
-            {events.map((value, index) => {
+            <View style={{flexDirection: 'column', maxHeight: '85%'}}>
+            {/* {events.map((value, index) => {
                     return (
                         <Text key={index}>
                             {value}
                         </Text>
                     )
-                })}
+                })} */}
+                <FlatList
+                    data={events}
+                    renderItem={renderItem}
+                    keyExtractor={event => event}
+                />
             </View>
+            <HowManyDaily
+                detail={<Text style={{marginTop: 10, color: 'blue'}}>You have {events.length/2} events to deal with today</Text>}
+            />
         </View>
     )
 }
