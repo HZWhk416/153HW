@@ -93,6 +93,7 @@ const Home = ({navigation}) => {
             setWedEvents([])
             console.log('in clearData')
             await AsyncStorage.clear()
+            window.location.reload();
         } catch(e) {
             console.log("error in clearData ")
             console.dir(e)
