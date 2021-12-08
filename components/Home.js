@@ -129,15 +129,17 @@ const Home = ({navigation}) => {
                 </Text> 
                 <View>
                     <Button 
-                        title="clear"
+                        color='purple'
+                        title="clear all"
                         onPress={() => clearAll()}
                     />
                 </View>
                 <View style = {styles.About}>
                     <Button
+                        color='purple'
                         title="About"
                         onPress={() =>
-                            navigation.navigate('About', {content: "This app is used for checking daily event"})
+                            navigation.navigate('About', {content: "This app is used for checking daily event.\nAuthor: Zhiwei Hu\nEmail: zhiweihu@brandeis.edu"})
                         }
                     />
                 </View>
@@ -148,7 +150,7 @@ const Home = ({navigation}) => {
                     <Text style={styles.DayText}>
                         Monday
                     </Text>
-                    <View style={{flexDirection: 'row', marginLeft: 10}}>
+                    <View style={{flexDirection: 'row', marginLeft: 5}}>
                     {/* <View style={{maxWidth: '50%'}}> */}
                     <TextInput
                         style={styles.Input}
@@ -159,9 +161,10 @@ const Home = ({navigation}) => {
                         numberOfLines={5}
                     />
                     {/* </View> */}
-                    <View style={{marginRight: 10}}>
+                    <View style={{marginRight: 5}}>
                         <Button
-                            title="update"
+                            color='purple'
+                            title="add"
                             onPress = {() => {
                                 if (MonText != '') {
                                     //var curMonEvents = this.state.MonEvents
@@ -176,12 +179,16 @@ const Home = ({navigation}) => {
                         />
                     </View> 
                     <Button
+                        color = 'purple'
                         title = "check"
                         onPress={() =>
                             // navigation.navigate('MondayEvents', {eventList: ["monday event1", "monday event2", "monday event3"]})
                             navigation.navigate('MondayEvents', {event: MonEvents})
                         }
                     />
+                    <View style={{marginLeft: 5}}>
+                        <Button color='purple' title='clear Mon' onPress={() => {setMonEvents([])}}/>
+                    </View>
                     </View>
                 </View>
 
@@ -190,16 +197,17 @@ const Home = ({navigation}) => {
                     <Text style={styles.DayText}>
                         Tuesday
                     </Text>
-                    <View style={{flexDirection: 'row', marginLeft: 10}}>
+                    <View style={{flexDirection: 'row', marginLeft: 5}}>
                     <TextInput
                         placeholder="enter event here"
                         onChangeText={text => (setTueText(text))}
                         style={{marginRight: 10, borderBottomWidth: 1.0}}
                         value={TueText}
                     />
-                    <View style={{marginRight: 10}}>
+                    <View style={{marginRight: 5}}>
                         <Button
-                            title="update"
+                            color='purple'
+                            title="add"
                             onPress = {() => {
                                 if (TueText != '') {
                                     setTueEvents(TueEvents.concat(TueText, '')); 
@@ -212,12 +220,16 @@ const Home = ({navigation}) => {
                         />
                     </View>
                     <Button
+                        color='purple'
                         title = "check"
                         onPress={() =>
                             // navigation.navigate('MondayEvents', {eventList: ["monday event1", "monday event2", "monday event3"]})
                             navigation.navigate('TuesdayEvents', {event: TueEvents})
                         }
                     />
+                    <View style={{marginLeft: 5}}>
+                        <Button color='purple' title='clear Tue' onPress={() => {setTueEvents([])}}/>
+                    </View>
                     </View>
                 </View>
 
@@ -226,16 +238,17 @@ const Home = ({navigation}) => {
                     <Text style={styles.DayText}>
                         Wednesday
                     </Text>
-                    <View style={{flexDirection: 'row', marginLeft: 10}}>
+                    <View style={{flexDirection: 'row', marginLeft: 5}}>
                     <TextInput
                         placeholder="enter event here"
                         onChangeText={text => (setWedText(text))}
                         style={{marginRight: 10, borderBottomWidth: 1.0}}
                         value={WedText}
                     />
-                    <View style={{marginRight: 10}}>
+                    <View style={{marginRight: 5}}>
                         <Button
-                            title="update"
+                            color='purple'
+                            title="add"
                             onPress = {() => {
                                 if (WedText != '') {
                                     setWedEvents(WedEvents.concat(WedText, '')); 
@@ -248,12 +261,16 @@ const Home = ({navigation}) => {
                         />
                     </View>
                     <Button
+                        color = 'purple'
                         title = "check"
                         onPress={() =>
                             // navigation.navigate('MondayEvents', {eventList: ["monday event1", "monday event2", "monday event3"]})
                             navigation.navigate('WednesdayEvents', {event: WedEvents})
                         }
                     />
+                    <View style={{marginLeft: 5}}>
+                        <Button color='purple' title='clear Wed' onPress={() => {setWedEvents([])}}/>
+                    </View>
                     </View>
                 </View>
 
@@ -262,16 +279,17 @@ const Home = ({navigation}) => {
                     <Text style={styles.DayText}>
                         Thursday
                     </Text>
-                    <View style={{flexDirection: 'row', marginLeft: 10}}>
+                    <View style={{flexDirection: 'row', marginLeft: 5}}>
                     <TextInput
                         style={{marginRight: 10, borderBottomWidth: 1.0}}
                         placeholder="enter event here"
                         onChangeText={text => (setThuText(text))}
                         value={ThuText}
                     />
-                    <View style={{marginRight: 10}}>
+                    <View style={{marginRight: 5}}>
                         <Button
-                            title="update"
+                            color='purple'
+                            title="add"
                             onPress = {() => {
                                 if (ThuText != '') {
                                     setThuEvents(ThuEvents.concat(ThuText, '')); 
@@ -284,12 +302,16 @@ const Home = ({navigation}) => {
                         />
                     </View>
                     <Button
+                        color='purple'
                         title = "check"
                         onPress={() =>
                             // navigation.navigate('MondayEvents', {eventList: ["monday event1", "monday event2", "monday event3"]})
                             navigation.navigate('ThursdayEvents', {event: ThuEvents})
                         }
                     />
+                    <View style={{marginLeft: 5}}>
+                        <Button color='purple' title='clear Thur' onPress={() => {setThuEvents([])}}/>
+                    </View>
                     </View>
                 </View>
 
@@ -297,16 +319,17 @@ const Home = ({navigation}) => {
                     <Text style={styles.DayText}>
                         Friday
                     </Text>
-                    <View style={{flexDirection: 'row', marginLeft: 10}}>
+                    <View style={{flexDirection: 'row', marginLeft: 5}}>
                     <TextInput
                         style={{marginRight: 10, borderBottomWidth: 1.0}}
                         placeholder="enter event here"
                         onChangeText={text => (setFriText(text))}
                         value={FriText}
                     />
-                    <View style={{marginRight: 10}}>
+                    <View style={{marginRight: 5}}>
                         <Button
-                            title="update"
+                            color='purple'
+                            title="add"
                             onPress = {() => {
                                 if (FriText != '') {
                                     setFriEvents(FriEvents.concat(FriText, '')); 
@@ -319,12 +342,16 @@ const Home = ({navigation}) => {
                         />
                     </View>
                     <Button
+                        color='purple'
                         title = "check"
                         onPress={() =>
                             // navigation.navigate('MondayEvents', {eventList: ["monday event1", "monday event2", "monday event3"]})
                             navigation.navigate('FridayEvents', {event: FriEvents})
                         }
                     />
+                    <View style={{marginLeft: 5}}>
+                        <Button color='purple' title='clear Fri' onPress={() => {setFriEvents([])}}/>
+                    </View>
                     </View>
                 </View>
             </View>
@@ -342,7 +369,7 @@ const About = ({navigation, route}) => {
             style={{flex:1}} 
             source={{uri: BackgroundUrl}} 
         >
-            <Text style={{fontSize: 45}}>
+            <Text style={{fontSize: 45, fontSize: 20}}>
                 {route.params.content}
             </Text>
         </ImageBackground>
@@ -458,10 +485,11 @@ const styles = StyleSheet.create({
         marginRight: '20px',
     },
     DayText: {
-        color: 'blue',
+        color: 'purple',
         marginLeft: '10px', 
         marginRight: '10px', 
         fontSize: 15,
+        fontWeight: 'bold'
     },
     OneLine: {
         flexDirection: 'column',

@@ -34,7 +34,7 @@ const SingleEvent = (props) => {
                 />
             </View>
             <HowManyDaily
-                detail={<Text style={{marginTop: 10, color: 'blue'}}>You have {events.length/2} events to deal with today</Text>}
+                detail={<Text style={{marginTop: 10, color: 'purple', fontWeight: 'bold'}}>You have {events.length/2} events to deal with today</Text>}
             />
         </View>
     )
