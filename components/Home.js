@@ -107,7 +107,7 @@ const Home = ({navigation}) => {
         try {
             const jsonValue = JSON.stringify(value)
             await AsyncStorage.setItem('@data_info', jsonValue)
-            console.log('just stored '+jsonValue)
+            console.log('just stored ' + jsonValue)
         } catch (e) {
             console.log("error in storeData ")
             console.dir(e)
@@ -127,13 +127,7 @@ const Home = ({navigation}) => {
                 <Text style={{fontSize: 20}}>
                     Your weekly events list
                 </Text> 
-                <View>
-                    <Button 
-                        color='purple'
-                        title="clear all"
-                        onPress={() => clearAll()}
-                    />
-                </View>
+                
                 <View style = {styles.About}>
                     <Button
                         color='purple'
@@ -171,9 +165,9 @@ const Home = ({navigation}) => {
                                     setMonEvents(MonEvents.concat(MonText, '')); 
                                     //console.log(MonEvents)
                                     setMonText('');
-                                    const theInfo = {MonEvents: MonEvents, TueEvents: TueEvents, WedEvents: WedEvents, ThuEvents: ThuEvents, FriEvents: FriEvents}
-                                    setTheInfo(theInfo)
-                                    storeData(theInfo)
+                                    // const theInfo = {MonEvents: MonEvents, TueEvents: TueEvents, WedEvents: WedEvents, ThuEvents: ThuEvents, FriEvents: FriEvents}
+                                    // setTheInfo(theInfo)
+                                    // storeData(theInfo)
                                 }
                             }}
                         />
@@ -212,9 +206,9 @@ const Home = ({navigation}) => {
                                 if (TueText != '') {
                                     setTueEvents(TueEvents.concat(TueText, '')); 
                                     setTueText('');
-                                    const theInfo = {MonEvents: MonEvents, TueEvents: TueEvents, WedEvents: WedEvents, ThuEvents: ThuEvents, FriEvents: FriEvents}
-                                    setTheInfo(theInfo)
-                                    storeData(theInfo)
+                                    // const theInfo = {MonEvents: MonEvents, TueEvents: TueEvents, WedEvents: WedEvents, ThuEvents: ThuEvents, FriEvents: FriEvents}
+                                    // setTheInfo(theInfo)
+                                    // storeData(theInfo)
                                 }
                             }}
                         />
@@ -253,9 +247,9 @@ const Home = ({navigation}) => {
                                 if (WedText != '') {
                                     setWedEvents(WedEvents.concat(WedText, '')); 
                                     setWedText('');
-                                    const theInfo = {MonEvents: MonEvents, TueEvents: TueEvents, WedEvents: WedEvents, ThuEvents: ThuEvents, FriEvents: FriEvents}
-                                    setTheInfo(theInfo)
-                                    storeData(theInfo)
+                                    // const theInfo = {MonEvents: MonEvents, TueEvents: TueEvents, WedEvents: WedEvents, ThuEvents: ThuEvents, FriEvents: FriEvents}
+                                    // setTheInfo(theInfo)
+                                    // storeData(theInfo)
                                 }
                             }}
                         />
@@ -294,9 +288,9 @@ const Home = ({navigation}) => {
                                 if (ThuText != '') {
                                     setThuEvents(ThuEvents.concat(ThuText, '')); 
                                     setThuText('');
-                                    const theInfo = {MonEvents: MonEvents, TueEvents: TueEvents, WedEvents: WedEvents, ThuEvents: ThuEvents, FriEvents: FriEvents}
-                                    setTheInfo(theInfo)
-                                    storeData(theInfo)
+                                    // const theInfo = {MonEvents: MonEvents, TueEvents: TueEvents, WedEvents: WedEvents, ThuEvents: ThuEvents, FriEvents: FriEvents}
+                                    // setTheInfo(theInfo)
+                                    // storeData(theInfo)
                                 }
                             }}
                         />
@@ -334,24 +328,36 @@ const Home = ({navigation}) => {
                                 if (FriText != '') {
                                     setFriEvents(FriEvents.concat(FriText, '')); 
                                     setFriText('');
-                                    const theInfo = {MonEvents: MonEvents, TueEvents: TueEvents, WedEvents: WedEvents, ThuEvents: ThuEvents, FriEvents: FriEvents}
-                                    setTheInfo(theInfo)
-                                    storeData(theInfo)
+                                    // const theInfo = {MonEvents: MonEvents, TueEvents: TueEvents, WedEvents: WedEvents, ThuEvents: ThuEvents, FriEvents: FriEvents}
+                                    // setTheInfo(theInfo)
+                                    // storeData(theInfo)
                                 }
                             }}
                         />
                     </View>
-                    <Button
-                        color='purple'
-                        title = "check"
-                        onPress={() =>
-                            // navigation.navigate('MondayEvents', {eventList: ["monday event1", "monday event2", "monday event3"]})
-                            navigation.navigate('FridayEvents', {event: FriEvents})
-                        }
-                    />
-                    <View style={{marginLeft: 5}}>
-                        <Button color='purple' title='clear Fri' onPress={() => {setFriEvents([])}}/>
+                        <Button
+                            color='purple'
+                            title = "check"
+                            onPress={() =>
+                                // navigation.navigate('MondayEvents', {eventList: ["monday event1", "monday event2", "monday event3"]})
+                                navigation.navigate('FridayEvents', {event: FriEvents})
+                            }
+                        />
+                        <View style={{marginLeft: 5}}>
+                            <Button color='purple' title='clear Fri' onPress={() => {setFriEvents([])}}/>
+                        </View>
                     </View>
+                </View>
+                <View style={{marginTop: 20,  flexDirection: 'row'}}>
+                    <View style={{marginLeft: 130, marginRight: 30, alignItems: 'center',}}>
+                        <Button color='purple' title='save' onPress={() => {
+                            const theInfo = {MonEvents: MonEvents, TueEvents: TueEvents, WedEvents: WedEvents, ThuEvents: ThuEvents, FriEvents: FriEvents}
+                            setTheInfo(theInfo)
+                            storeData(theInfo)
+                        }}/>
+                    </View>
+                    <View>
+                        <Button color='purple' title='clear all' onPress={clearAll}/>
                     </View>
                 </View>
             </View>
@@ -472,7 +478,7 @@ const styles = StyleSheet.create({
         marginBottom: '10px',
         //width: '40%',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        //justifyContent: 'space-between',
         //backgroundColor: '#53e0ce',
         flexDirection: 'row',
     },
@@ -483,6 +489,7 @@ const styles = StyleSheet.create({
     About: {
         backgroundColor: '#38f58d',
         marginRight: '20px',
+        marginLeft: '10px',
     },
     DayText: {
         color: 'purple',

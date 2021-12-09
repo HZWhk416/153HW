@@ -7,7 +7,7 @@ const ValueProvider = ({value, children}) => {
 
   return (
     <ValueContext.Provider
-        value={{currentValue,setCurrentValue}} >
+      value={{currentValue,setCurrentValue}} >
       {children}
     </ValueContext.Provider>
    )
