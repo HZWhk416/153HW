@@ -1,10 +1,6 @@
 App name: Weekly Events List.
 
-Introduction：
-This app is used to record user’s to-do list of each work day of the incoming week, each time user enters a specific event and click update, this event will be added into the event list of this specific day, click check and the list will be presented. \n
-The button 'clear all' is used to clear all events that have been entered so far. \n
-The button ‘About’ simply directs to a new page that briefly describe what this app does. \n
-The button 'save' is used to save all the data that has been entered so far. \n
+Introduction：This app is used to record user’s to-do list of each work day of the incoming week, each time user enters a specific event and click update, this event will be added into the event list of this specific day, click check and the list will be presented. The button 'clear all' is used to clear all events that have been entered so far. The button ‘About’ simply directs to a new page that briefly describe what this app does. The button 'save' is used to save all the data that has been entered so far.
 
 Some tech features used in this app: React native, JSX, Async Storage, useEffect hook, useState hook, Context, Container, Flatlist, Stack navigation, etc.
 
